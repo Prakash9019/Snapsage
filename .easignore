@@ -1,0 +1,7 @@
+# Ignore build artifacts and caches
+/android/app/build/
+/android/build/
+/ios/build/
+/node_modules/
+.expo/
+.expo-shared/

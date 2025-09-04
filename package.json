@@ -1,0 +1,49 @@
+{
+  "name": "frontend",
+  "license": "0BSD",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "scripts": {
+    "start": "NODE_ENV=development react-native start",
+    "android": "NODE_ENV=development expo run:android",
+    "ios": "NODE_ENV=development expo run:ios"
+  },
+  "dependencies": {
+    "@expo-google-fonts/manrope": "^0.4.1",
+    "@expo-google-fonts/poppins": "^0.4.0",
+    "@expo-google-fonts/raleway": "^0.4.1",
+    "@expo/metro-runtime": "~5.0.4",
+    "@react-native-async-storage/async-storage": "2.1.2",
+    "@react-native-community/datetimepicker": "8.4.1",
+    "@react-native-firebase/app": "^23.3.0",
+    "@react-native-firebase/auth": "^23.3.0",
+    "@react-native-firebase/crashlytics": "^23.3.0",
+    "@react-native-google-signin/google-signin": "^15.0.0",
+    "@react-native-picker/picker": "2.11.1",
+    "axios": "^1.11.0",
+    "expo": "53.0.22",
+    "expo-app-loading": "^2.1.1",
+    "expo-auth-session": "~6.2.1",
+    "expo-build-properties": "^0.14.8",
+    "expo-dev-client": "~5.2.4",
+    "expo-font": "~13.3.2",
+    "expo-image-picker": "^16.1.4",
+    "expo-linear-gradient": "^14.1.5",
+    "expo-splash-screen": "~0.30.10",
+    "expo-status-bar": "~2.2.3",
+    "expo-web-browser": "~14.2.0",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "react-native": "0.79.5",
+    "react-native-keyboard-aware-scroll-view": "^0.9.5",
+    "react-native-modal-datetime-picker": "^18.0.0",
+    "react-native-web": "^0.20.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@types/react": "~19.0.10",
+    "@types/react-native-linear-gradient": "^2.4.0",
+    "typescript": "~5.8.3"
+  },
+  "private": true
+}

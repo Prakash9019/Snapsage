@@ -1,0 +1,56 @@
+{
+  "expo": {
+    "name": "SnapSage",
+    "slug": "snapsage-app",
+    "scheme": "snapsage",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/image2.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/image2.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "googleServicesFile": "./GoogleService-Info.plist",
+      "bundleIdentifier": "com.snapsage.apps"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/image2.png",
+        "backgroundColor": "#ffffff"
+      },
+       "googleServicesFile": "./google-services.json",
+      "package": "com.snapsage.apps"
+    },
+    "web": {
+      "favicon": "./assets/image2.png"
+    },
+    "plugins": [
+      [
+        "@react-native-google-signin/google-signin",
+        {
+          "iosUrlScheme": "com.googleusercontent.apps.43834655102-jnmjrht1n89g07ut7uqf6bjc839dse3f"
+        }
+      ],
+       "@react-native-firebase/app",
+      "@react-native-firebase/auth",
+      "@react-native-firebase/crashlytics",
+       [
+        "expo-build-properties",
+        {
+          "ios": {
+            "useFrameworks": "static"
+          }
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "ffbc5691-ead2-4d9d-9b32-619c2c5a98c2"
+      }
+    }
+  }
+}

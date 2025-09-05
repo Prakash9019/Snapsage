@@ -436,79 +436,150 @@
 
 // AuthScreen.tsx
 // AuthScreen.tsx
-import React, { useState } from "react";
-import { View, TextInput, Button, Text, StyleSheet } from "react-native";
-import auth from "@react-native-firebase/auth";
+// import React, { useState } from "react";
+// import { View, TextInput, Button, Text, StyleSheet } from "react-native";
+// import auth from "@react-native-firebase/auth";
+// import { getAuth, onAuthStateChanged, signInWithPhoneNumber } from '@react-native-firebase/auth';
 
-const AuthScreen = () => {
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [otp, setOtp] = useState("");
-  const [confirm, setConfirm] = useState<any>(null);
-  const [message, setMessage] = useState("");
 
-  // ✅ Send OTP
-  const sendOtp = async () => {
-    try {
-      const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
-      setConfirm(confirmation);
-      setMessage("OTP sent successfully ✅");
-    } catch (error: any) {
-      console.error("Error sending OTP:", error);
-      setMessage(`Error sending OTP: ${error.message}`);
+// const AuthScreen = () => {
+//   const [phoneNumber, setPhoneNumber] = useState("");
+//   const [otp, setOtp] = useState("");
+//   const [confirm, setConfirm] = useState<any>(null);
+//   const [message, setMessage] = useState("");
+
+//   // ✅ Send OTP
+//   const sendOtp = async () => {
+//     try {
+//       console.log("STARTED")
+//           const confirmation = await signInWithPhoneNumber(getAuth(), "+91 8247345568");
+// console.log(confirmation,"CONFIRMATION")
+//       // const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
+//       // setConfirm(confirmation);
+//       // setMessage("OTP sent successfully ✅");
+//     } catch (error: any) {
+//       console.error("Error sending OTP:", error);
+//       setMessage(`Error sending OTP: ${error.message}`);
+//     }
+//   };
+
+//   // ✅ Verify OTP
+//   const verifyOtp = async () => {
+//     try {
+//       if (confirm) {
+//         await confirm.confirm(otp);
+//         setMessage("Phone number verified 🎉");
+//       }
+//     } catch (error: any) {
+//       console.error("Error verifying OTP:", error);
+//       setMessage(`Error verifying OTP: ${error.message}`);
+//     }
+//   };
+
+//   return (
+//     <View style={styles.container}>
+//       <Text style={styles.heading}>Phone Auth</Text>
+
+//       {!confirm ? (
+//         <>
+//           <TextInput
+//             style={styles.input}
+//             placeholder="+91 9876543210"
+//             keyboardType="phone-pad"
+//             value={phoneNumber}
+//             onChangeText={setPhoneNumber}
+//           />
+//           <Button title="Send OTP" onPress={sendOtp} />
+//         </>
+//       ) : (
+//         <>
+//           <TextInput
+//             style={styles.input}
+//             placeholder="Enter OTP"
+//             keyboardType="number-pad"
+//             value={otp}
+//             onChangeText={setOtp}
+//           />
+//           <Button title="Verify OTP" onPress={verifyOtp} />
+//         </>
+//       )}
+
+//       {message ? <Text style={styles.message}>{message}</Text> : null}
+//     </View>
+//   );
+// };
+
+// const styles = StyleSheet.create({
+//   container: { flex: 1, justifyContent: "center", padding: 20 },
+//   heading: { fontSize: 22, fontWeight: "bold", marginBottom: 20, textAlign: "center" },
+//   input: { borderWidth: 1, borderColor: "#ccc", padding: 12, marginBottom: 12, borderRadius: 8 },
+//   message: { marginTop: 20, fontSize: 16, textAlign: "center" },
+// });
+
+// export default AuthScreen;
+
+
+import { useState, useEffect } from 'react';
+import { Button, TextInput } from 'react-native';
+import { getAuth, onAuthStateChanged, signInWithPhoneNumber } from '@react-native-firebase/auth';
+
+export default function PhoneSignIn() {
+  // If null, no SMS has been sent
+  const [confirm, setConfirm] = useState(null);
+
+  // verification code (OTP - One-Time-Passcode)
+  const [code, setCode] = useState('');
+
+  // Handle login
+  function handleAuthStateChanged(user) {
+    if (user) {
+      // Some Android devices can automatically process the verification code (OTP) message, and the user would NOT need to enter the code.
+      // Actually, if he/she tries to enter it, he/she will get an error message because the code was already used in the background.
+      // In this function, make sure you hide the component(s) for entering the code and/or navigate away from this screen.
+      // It is also recommended to display a message to the user informing him/her that he/she has successfully logged in.
     }
-  };
+  }
 
-  // ✅ Verify OTP
-  const verifyOtp = async () => {
-    try {
-      if (confirm) {
-        await confirm.confirm(otp);
-        setMessage("Phone number verified 🎉");
-      }
-    } catch (error: any) {
-      console.error("Error verifying OTP:", error);
-      setMessage(`Error verifying OTP: ${error.message}`);
+  useEffect(() => {
+    const subscriber = onAuthStateChanged(getAuth(), handleAuthStateChanged);
+    return subscriber; // unsubscribe on unmount
+  }, []);
+
+  // Handle the button press
+  async function handleSignInWithPhoneNumber(phoneNumber) {
+    console.log("REACHED HERE");
+    try{
+    const confirmation = await signInWithPhoneNumber(getAuth(), phoneNumber);
+     console.log("__________THIS IS CONFORMATION____________",confirmation);
+    setConfirm(confirmation);
+    }catch(e){
+      console.log("______THIS SI ERROR____________",e);
     }
-  };
+   
+  }
+
+  async function confirmCode() {
+    try {
+      await confirm.confirm(code);
+    } catch (error) {
+      console.log('Invalid code.');
+    }
+  }
+
+  if (!confirm) {
+    console.log("JJJJJJJJJJJJJJj")
+    return (
+      <Button
+        title="Phone Number Sign In"
+        onPress={() => handleSignInWithPhoneNumber('+91 9603337994')}
+      />
+    );
+  }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.heading}>Phone Auth</Text>
-
-      {!confirm ? (
-        <>
-          <TextInput
-            style={styles.input}
-            placeholder="+91 9876543210"
-            keyboardType="phone-pad"
-            value={phoneNumber}
-            onChangeText={setPhoneNumber}
-          />
-          <Button title="Send OTP" onPress={sendOtp} />
-        </>
-      ) : (
-        <>
-          <TextInput
-            style={styles.input}
-            placeholder="Enter OTP"
-            keyboardType="number-pad"
-            value={otp}
-            onChangeText={setOtp}
-          />
-          <Button title="Verify OTP" onPress={verifyOtp} />
-        </>
-      )}
-
-      {message ? <Text style={styles.message}>{message}</Text> : null}
-    </View>
+    <>
+      <TextInput value={code} onChangeText={text => setCode(text)} />
+      <Button title="Confirm Code" onPress={() => confirmCode()} />
+    </>
   );
-};
-
-const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: "center", padding: 20 },
-  heading: { fontSize: 22, fontWeight: "bold", marginBottom: 20, textAlign: "center" },
-  input: { borderWidth: 1, borderColor: "#ccc", padding: 12, marginBottom: 12, borderRadius: 8 },
-  message: { marginTop: 20, fontSize: 16, textAlign: "center" },
-});
-
-export default AuthScreen;
+}

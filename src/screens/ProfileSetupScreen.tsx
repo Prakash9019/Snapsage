@@ -38,27 +38,55 @@ export default function ProfileSetupScreen({ onProfileComplete }: ProfileSetupSc
     setDatePickerVisible(false);
   };
 
-  const handleProfileSubmit = async () => {
-    if (loading) return; // prevent multiple clicks
-    setLoading(true);
+const handleProfileSubmit = async () => {
+  if (loading) return; // prevent multiple clicks
 
-    try {
-      const res = await axiosClient.post("/user/profile-setup", {
-        name,
-        dateOfBirth,
-        gender,
-        cityState,
-        motherTongue,
-        qualification,
-      });
-      alert(res.data.msg || "Profile saved successfully!");
-      onProfileComplete();
-    } catch (error: any) {
-      alert(error.response?.data?.msg || "Failed to save profile. Please try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
+  // ✅ Validation
+  if (!name.trim()) {
+    alert("Name is required");
+    return;
+  }
+  if (!dateOfBirth) {
+    alert("Date of Birth is required");
+    return;
+  }
+  if (!gender) {
+    alert("Gender is required");
+    return;
+  }
+  if (!cityState.trim()) {
+    alert("City and State are required");
+    return;
+  }
+  if (!motherTongue.trim()) {
+    alert("Mother Tongue is required");
+    return;
+  }
+  if (!qualification.trim()) {
+    alert("Qualification is required");
+    return;
+  }
+
+  setLoading(true);
+
+  try {
+    const res = await axiosClient.post("/user/profile-setup", {
+      name,
+      dateOfBirth,
+      gender,
+      cityState,
+      motherTongue,
+      qualification,
+    });
+    alert(res.data.msg || "Profile saved successfully!");
+    onProfileComplete();
+  } catch (error: any) {
+    alert(error.response?.data?.msg || "Failed to save profile. Please try again.");
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <SafeAreaView style={styles.container}>

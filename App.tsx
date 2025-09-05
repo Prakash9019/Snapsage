@@ -183,7 +183,7 @@ export default function App() {
     case SCREENS.SPLASH:
       return <SplashScreen1 onContinue={() => setCurrentScreen(SCREENS.AUTH)} />;
     case SCREENS.AUTH:
-      return <AuthScreen  />;
+      return <AuthScreen onLogin={handleLogin} />;
     case SCREENS.SUBMISSION_COMPLETE:
       return (
         <SubmissionCompleteScreen

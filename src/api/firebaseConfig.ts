@@ -26,7 +26,7 @@ import auth from '@react-native-firebase/auth';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBDNueFdGSNIJdCW4_Jz3si9b8NbcsgcX8",
-  authDomain: "snap-f86b4.firebaseapp.com",
+  authDomain: "snapsageresearch.com",
   projectId: "snap-f86b4",
   storageBucket: "snap-f86b4.appspot.com",
   messagingSenderId: "876382700747",
